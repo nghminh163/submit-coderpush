@@ -71,8 +71,6 @@ function TinderCards() {
 
   const onSwipe = (direction: Direction, index: number) => {
     updateCurrentIndex(index - 1);
-    const newUsers = [users[0], users[1], users[2]];
-    setUsers(newUsers);
   };
   const [showChild, setShowChild] = useState(false);
   useEffect(() => {
