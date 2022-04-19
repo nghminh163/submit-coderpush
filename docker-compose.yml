@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  server:
+    build: tinder-app-be
+    networks:
+      - coderpush-test
+    volumes:
+      - ./tinder-app-be/prisma:/app/prisma
+    container_name: server
+  fe:
+    build: tinder-app-fe
+    networks:
+      - coderpush-test
+  webserver:
+    image: nginx:mainline-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - server
+    networks:
+      - coderpush-test
+
+networks:
+  coderpush-test:
+    driver: bridge

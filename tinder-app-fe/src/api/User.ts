@@ -6,7 +6,7 @@ export const getUsers = async (token) => {
   // Pass token for ignore self
   try {
     const userRes = await axios.get<Response<User[]>>(
-      "http://localhost:3001/users",
+      "/api/users",
       {
         headers: {
           authorization: "Bearer " + token,
@@ -23,7 +23,7 @@ export const getLikeUsers = async (token) => {
   // Pass token for ignore self
   try {
     const userRes = await axios.get<Response<User[]>>(
-      "http://localhost:3001/users/like",
+      "/api/users/like",
       {
         headers: {
           authorization: "Bearer " + token,
@@ -40,7 +40,7 @@ export const getMatchUsers = async (token) => {
   // Pass token for ignore self
   try {
     const userRes = await axios.get<Response<User[]>>(
-      "http://localhost:3001/users/match",
+      "/api/users/match",
       {
         headers: {
           authorization: "Bearer " + token,
