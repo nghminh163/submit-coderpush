@@ -3,7 +3,7 @@ import { Direction } from "../interfaces/TinderCard";
 import { API } from "../interfaces/TinderCard";
 import { User } from "../interfaces/User";
 import TinderSwipeCard from "react-tinder-card";
-import { useCallback, useContext, useEffect } from "react";
+import { useCallback, useContext, useEffect, useMemo } from "react";
 import { TypeList, UserFavList } from "../stores/userFavList";
 
 const Card = styled("div")({
@@ -48,6 +48,11 @@ function TinderPersonCard({
     },
     [appendToList, user]
   );
+  const age = useMemo(
+    () => new Date().getFullYear() - new Date(user.dob).getFullYear(),
+    [user.dob]
+  );
+
   return (
     <TinderSwipeCard
       ref={refChild}
@@ -62,7 +67,9 @@ function TinderPersonCard({
           backgroundImage: user.photoUrl && `url(${user.photoUrl})`,
         }}
       >
-        <h3>{user.name}</h3>
+        <h3>
+          {user.name}, {age}
+        </h3>
       </Card>
     </TinderSwipeCard>
   );

@@ -14,43 +14,25 @@ import LoveIcon from "@mui/icons-material/Favorite";
 import SimpleDialog from "./DialogList";
 import TinderPersonCard from "./TinderPersonCard";
 import UserFavProvider, { UserFavList } from "../stores/userFavList";
-
-const db = [
-  {
-    name: "Richard Hendricks",
-    photoUrl: "./img/richard.jpg",
-  },
-  {
-    name: "Erlich Bachman",
-    photoUrl: "./img/erlich.jpg",
-  },
-  {
-    name: "Monica Hall",
-    photoUrl: "./img/monica.jpg",
-  },
-  {
-    name: "Jared Dunn",
-    photoUrl: "./img/jared.jpg",
-  },
-  {
-    name: "Dinesh Chugtai",
-    photoUrl: "./img/dinesh.jpg",
-  },
-];
+import { getUsers } from "../api/User";
 
 function TinderCards() {
-  const [users, setUsers] = useState(db);
-  const [currentIndex, setCurrentIndex] = useState<number>(db.length - 1); // Set default -1
+  const [users, setUsers] = useState<User[]>([]);
 
-  //   const [lastDirection, setLastDirection] = useState();
-  // used for outOfFrame closure
-  //   const currentIndexRef = useRef(currentIndex);
+  useEffect(() => {
+    (async () => {
+      const _users = await getUsers();
+      setUsers(_users);
+      setShowChild(true);
+    })();
+  }, []);
+  const [currentIndex, setCurrentIndex] = useState<number>(users.length - 1); // Set default -1
 
   const currentIndexRef = useRef<number>(currentIndex);
 
   const childRefs = useMemo<React.RefObject<API>[]>(
     () =>
-      Array(db.length)
+      Array(users.length)
         .fill(0)
         .map(() => React.createRef<API>()),
     []
@@ -61,41 +43,20 @@ function TinderCards() {
     currentIndexRef.current = val;
   };
 
-  const canSwipe = currentIndex >= 0;
-
-  const swipe = async (direction: Direction) => {
-    if (canSwipe && currentIndex < db.length) {
-      await childRefs?.[currentIndex]?.current?.swipe(direction);
-    }
-  };
-
   const onSwipe = (direction: Direction, index: number) => {
     updateCurrentIndex(index - 1);
   };
   const [showChild, setShowChild] = useState(false);
-  useEffect(() => {
-    setShowChild(true);
-  }, []);
 
-  //   const handleClickOpen = (data: User[]) => {
-  //     // setData(data);
-  //     console.log(likeList);
-  //   };
-
-  //   const handleClose = () => {
-  //     setData([]);
-  //   };
-
-  //     [dislikeList, likeList]
-  //   );
-  const { likeList } = useContext(UserFavList);
   if (!showChild) {
     return null;
   }
+
   return (
     <UserFavProvider>
       {/* <SimpleDialog data={data} onClose={handleClose} /> */}
       <Box sx={{ width: "90vw", maxWidth: 260, height: 500 }}>
+        {currentIndex === -1 && <p>Empty</p>}
         {users.map((user, i) => (
           <TinderPersonCard
             refChild={childRefs[i]}

@@ -1,5 +1,5 @@
 export interface User {
   name: string;
-  dob: string;
+  dob: Date;
   photoUrl: string;
 }
