@@ -9,7 +9,7 @@ export const getAuthUser = async () => {
         user: User;
         token: string;
       }>
-    >("http://localhost:3001/auth/login");
+    >("/api/auth/login");
     return userRes.data.data;
   } catch (e) {
     return null;
@@ -23,7 +23,7 @@ export const getMe = async (token: string) => {
         user: User;
       }>
     >(
-      "http://localhost:3001/auth/me",
+      "/api/auth/me",
       {},
       {
         headers: {
@@ -44,7 +44,7 @@ export const likeReq = async (token: string, partnerId: number) => {
         isMatch: boolean;
       }>
     >(
-      "http://localhost:3001/users/like",
+      "/api/users/like",
       { partnerId },
       {
         headers: {

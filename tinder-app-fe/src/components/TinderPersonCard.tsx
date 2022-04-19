@@ -3,7 +3,7 @@ import { Direction } from "../interfaces/TinderCard";
 import { API } from "../interfaces/TinderCard";
 import { User } from "../interfaces/User";
 import TinderSwipeCard from "react-tinder-card";
-import { useCallback, useContext, useEffect, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { TypeList, UserFavList } from "../stores/userFavList";
 
 const Card = styled("div")({

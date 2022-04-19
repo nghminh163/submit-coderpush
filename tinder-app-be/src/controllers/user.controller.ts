@@ -144,7 +144,6 @@ export default class UserController {
           ],
         },
       });
-      console.log(matches);
       const ignoreList = [req.user.id];
       const data = await this.prisma.user.findMany({
         where: {
