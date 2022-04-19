@@ -3,17 +3,18 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styled } from "@mui/system";
 import TinderCard from "../src/components/TinderCard";
+import { AuthContext } from "../src/stores/AuthStore";
+import { useContext } from "react";
 
 const App = styled("div")({
   "> div": {
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
     alignItems: "center",
   },
 });
 
 const Home: NextPage = () => {
+  const authStore = useContext(AuthContext);
   return (
     <>
       <ToastContainer
@@ -27,8 +28,8 @@ const Home: NextPage = () => {
         draggable
         pauseOnHover
       />
-
       <App>
+        {authStore?.user && <p>You are logging as {authStore?.user?.name}</p>}
         <TinderCard />
       </App>
     </>

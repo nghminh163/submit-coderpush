@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Route } from '@interfaces/route.interface';
 import UserController from '@/controllers/user.controller';
+import authMiddleware from '@/middleware/auth.middleware';
 
 class UserRoute implements Route {
   public path = '/users';
@@ -12,10 +13,13 @@ class UserRoute implements Route {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}/create`, this.userController.createUser);
-    this.router.get(`${this.path}`, this.userController.getUsers);
-    this.router.get(`${this.path}/:id`, this.userController.getUser);
+    this.router.get(`${this.path}/like`, authMiddleware, this.userController.getLikeList);
+    this.router.get(`${this.path}/match`, authMiddleware, this.userController.getMatchLike);
 
+    this.router.post(`${this.path}/create`, this.userController.createUser);
+    this.router.get(`${this.path}`, authMiddleware, this.userController.getUsers);
+    this.router.get(`${this.path}/:id`, this.userController.getUser);
+    this.router.post(`${this.path}/like`, authMiddleware, this.userController.likeUser);
   }
 }
 

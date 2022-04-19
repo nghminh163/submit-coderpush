@@ -52,7 +52,6 @@ function TinderPersonCard({
     () => new Date().getFullYear() - new Date(user.dob).getFullYear(),
     [user.dob]
   );
-
   return (
     <TinderSwipeCard
       ref={refChild}
